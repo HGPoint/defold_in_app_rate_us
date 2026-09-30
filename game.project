@@ -1,0 +1,11 @@
+[project]
+title = defold_in_app_rate_us
+
+[bootstrap]
+main_collection = /main/main.collectionc
+
+[library]
+include_dirs = inapp_review
+
+[input]
+game_binding = /builtins/input/all.input_bindingc

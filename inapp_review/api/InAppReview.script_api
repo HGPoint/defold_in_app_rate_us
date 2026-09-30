@@ -1,0 +1,54 @@
+- name: inapp_review
+  type: table
+  desc: Native in-app review request for Google Play, iOS, and macOS. The
+        module is present on other Defold targets but reports unsupported.
+        Store policy decides whether a rating dialog actually appears.
+  members:
+
+    - name: is_supported
+      type: function
+      desc: Check whether this runtime can attempt an in-app review request.
+            On Android this checks Android 5.0+ and an enabled Google Play Store;
+            it cannot prove that the app was installed through Google Play.
+            On iOS and macOS this checks StoreKit OS availability.
+      returns:
+        - name: supported
+          type: boolean
+
+    - name: request_review
+      type: function
+      desc: Ask the platform for a native review prompt. The return value only
+            reports whether the extension accepted the request. The optional
+            callback runs on the Defold update thread. On Android it runs when
+            the Play flow ends or fails; on Apple it runs after StoreKit receives
+            the request. Neither platform reports whether a dialog appeared or
+            the user rated the app. Only one request can be pending at a time.
+      parameters:
+        - name: callback
+          type: function|nil
+          desc: Optional function(self, result). result.status is `finished`
+                on Android flow completion, `requested` on Apple, or `error`.
+                On error, result.reason is `request_failed`, `launch_failed`,
+                or `not_visible`.
+      returns:
+        - name: accepted
+          type: boolean
+          desc: True when the request was accepted for processing.
+        - name: reason
+          type: string|nil
+          desc: Nil on acceptance, otherwise `unsupported`, `busy`,
+                `not_visible`, or `platform_error`.
+      examples:
+        - desc: |-
+            ```lua
+            if inapp_review.is_supported() then
+                local accepted, reason = inapp_review.request_review(function(self, result)
+                    if result.status == "error" then
+                        print("Review request failed:", result.reason)
+                    end
+                end)
+                if not accepted then
+                    print("Review request unavailable:", reason)
+                end
+            end
+            ```

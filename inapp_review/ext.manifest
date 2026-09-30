@@ -1,0 +1,26 @@
+name: "InAppReview"
+
+platforms:
+  arm64-ios:
+    context:
+      frameworks: ["Foundation", "StoreKit", "UIKit"]
+
+  arm64_sim-ios:
+    context:
+      frameworks: ["Foundation", "StoreKit", "UIKit"]
+
+  armv7-ios:
+    context:
+      frameworks: ["Foundation", "StoreKit", "UIKit"]
+
+  x86_64-ios:
+    context:
+      frameworks: ["Foundation", "StoreKit", "UIKit"]
+
+  arm64-osx:
+    context:
+      frameworks: ["AppKit", "Foundation", "StoreKit"]
+
+  x86_64-osx:
+    context:
+      frameworks: ["AppKit", "Foundation", "StoreKit"]
