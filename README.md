@@ -1,0 +1,1 @@
+# defold_in_app_rate_us
